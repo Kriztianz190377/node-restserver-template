@@ -1,12 +1,16 @@
 const express = require('express')
-const cors = require('cors')
+const cors = require('cors');
+const { dbConnection } = require('../database/config');
 
 class Server {
 
     constructor() {
         this.app = express();
-        this.port = process.env.PORT||3000;
+        this.port = process.env.PORT;
         this.usersPath = '/api/users'
+
+        //connection a DB
+        this.conecctionDB()
 
         //middlewares
         this.middleware();
@@ -16,13 +20,16 @@ class Server {
         this.routes();
 
     }
+    async conecctionDB() {
+       await dbConnection();
+    }
 
     middleware() {
         //CORS
         this.app.use(cors())
-        
+
         //Lectura y parseo del body
-        
+
         this.app.use(express.json())
 
         //directpry public
@@ -45,4 +52,3 @@ class Server {
 }
 
 module.exports = Server
-
