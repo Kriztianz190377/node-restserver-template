@@ -70,17 +70,16 @@ const usersPatch = (req, res) => {
     })
 }
 const usersDelete = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params 
 
     //delete of dbMongoose
     //const user = await User.findByIdAndDelete(id)
     
     const user = await User.findByIdAndUpdate(id, {state:false})
 
-    res.status(200).json({
-        user,
-        msn: "delete API"
-    })
+    // const userAuthenticated =req.user
+
+    res.status(200).json(user)
 }
 
 module.exports = {
